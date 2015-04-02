@@ -1,0 +1,3 @@
+
+$('<%= "#toggle_lines_#{@found_file.id}" %>').css('display', 'table-cell');
+$('<%= "#show_lines_#{@found_file.id}" %>').html("<%= escape_javascript(render partial: 'found_lines', locals: { found_lines: @found_file.found_lines.order('search_term_count DESC, result_entry_count DESC, found_file_id, found_line_num') } ) %>");

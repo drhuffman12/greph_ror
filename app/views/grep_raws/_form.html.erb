@@ -1,0 +1,41 @@
+<%= form_for(@grep_raw) do |f| %>
+  <% if @grep_raw.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@grep_raw.errors.count, "error") %> prohibited this grep_raw from being saved:</h2>
+
+      <ul>
+      <% @grep_raw.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :search_term %><br>
+    <%= f.text_field :search_term %>
+  </div>
+  <div class="field">
+    <%= f.label :search_path %><br>
+    <%= f.text_field :search_path %>
+  </div>
+  <div class="field">
+    <%= f.label :cmd %><br>
+    <%= f.text_field :cmd, :readonly => true %>
+  </div>
+  <div class="field">
+    <pre style="width: 80em; height: 8em; overflow: scroll">
+        <%= f.label :result_set %><br>
+        <%= f.text_area :result_set, :readonly => true %>
+    </pre>
+  </div>
+  <div class="field">
+    <pre style="width: 20em; height: 8em; overflow: scroll">
+        <%= f.label :error_log %><br>
+        <%= f.text_area :error_log, :readonly => true %>
+    </pre>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

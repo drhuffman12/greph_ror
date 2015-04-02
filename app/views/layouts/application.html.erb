@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= action_name.camelize %> | <%= controller_name.camelize %> | GrephRor </title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div style="border: 0.1em solid gray; background-color: #F0F0FF">
+    <ul>
+      <li><%= link_to 'Home', home_index_path %></li>
+
+      <li><hr/></li>
+
+      <li><b><%= link_to 'GrepMultis', grep_multis_path %> (<%= GrepMulti.count %>)</b></li>
+
+      <li><%= link_to 'GrepRaws', grep_raws_path %> (<%= GrepRaw.count %>)</li>
+
+      <li><hr/></li>
+
+      <li><%= link_to 'GrepResultEntries', grep_result_entries_path %> (<%= GrepResultEntry.count %>)</li>
+
+      <li><b><%= link_to 'FoundFiles', found_files_path %> (<%= FoundFile.count %>)</b></li>
+      <li><%= link_to 'FoundLines', found_lines_path %> (<%= FoundLine.count %>)</li>
+
+      <li><hr/></li>
+
+      <li><%= link_to 'CleanDb', clean_db_index_path %></li>
+    </ul>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

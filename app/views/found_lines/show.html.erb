@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Found file:</strong>
+  <%= @found_line.found_file_id %>
+</p>
+
+<p>
+  <strong>Found line num:</strong>
+  <%= @found_line.found_line_num %>
+</p>
+
+<%= link_to 'List', found_lines_path %>

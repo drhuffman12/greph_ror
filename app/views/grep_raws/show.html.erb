@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Search term:</strong>
+  <%= @grep_raw.search_term %>
+</p>
+
+<p>
+  <strong>Search path:</strong>
+  <%= @grep_raw.search_path %>
+</p>
+
+<p>
+  <strong>Command:</strong>
+  <%= @grep_raw.cmd %>
+</p>
+
+<p>
+  <strong>Result set:</strong>
+  <pre style="width: 80em; height: 8em; overflow: scroll">
+    <%= @grep_raw.result_set %>
+  </pre>
+</p>
+
+<p>
+  <strong>Error log:</strong>
+  <pre style="width: 20em; height: 4em; overflow: scroll">
+    <%= @grep_raw.error_log %>
+  </pre>
+</p>
+
+<%= link_to 'Edit', edit_grep_raw_path(@grep_raw) %> |
+<%= link_to 'List', grep_raws_path %>

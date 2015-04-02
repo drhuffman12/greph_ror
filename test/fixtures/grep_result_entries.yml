@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  grep_raw_id: 1
+  found_file_path: MyString
+  found_line_num: 1
+  found_line_string: MyString
+
+two:
+  grep_raw_id: 1
+  found_file_path: MyString
+  found_line_num: 1
+  found_line_string: MyString

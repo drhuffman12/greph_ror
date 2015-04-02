@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Grep Multis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Search terms</th>
+      <th>Search paths</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grep_multis.each do |grep_multi| %>
+      <tr>
+        <td><pre><%= grep_multi.search_terms %></pre></td>
+        <td><pre><%= grep_multi.search_paths %></pre></td>
+        <td><%= link_to 'Show', grep_multi %></td>
+        <td><%= link_to 'Edit', edit_grep_multi_path(grep_multi) %></td>
+        <td><%= link_to 'Destroy', grep_multi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Grep multi', new_grep_multi_path %>

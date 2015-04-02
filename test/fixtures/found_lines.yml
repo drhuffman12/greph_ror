@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  found_file_id: 1
+  found_line_num: 1
+
+two:
+  found_file_id: 1
+  found_line_num: 1

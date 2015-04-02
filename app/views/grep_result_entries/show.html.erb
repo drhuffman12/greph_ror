@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Grep raw:</strong>
+  <%= @grep_result_entry.grep_raw_id %>
+</p>
+
+<p>
+  <strong>Found file path:</strong>
+  <%= @grep_result_entry.found_file.found_file_path %>
+</p>
+
+<p>
+  <strong>Found line num:</strong>
+  <%= @grep_result_entry.found_line.found_line_num %>
+</p>
+
+<p>
+  <strong>Found line string:</strong>
+  <%= @grep_result_entry.found_line.found_line_string %>
+</p>
+
+<%= link_to 'List', grep_result_entries_path %>

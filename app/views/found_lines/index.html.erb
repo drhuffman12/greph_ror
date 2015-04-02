@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Found Lines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Found file id</th>
+      <th>id</th>
+
+      <th>search_term_list</th>
+      <th>search_term_count</th>
+      <th>result_entry_count</th>
+
+      <th>Found file path</th>
+      <th>Found line num</th>
+      <th>Found line string</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @found_lines.each do |found_line| %>
+      <tr>
+        <td><%= found_line.found_file_id %></td>
+        <td><%= found_line.id %></td>
+
+        <td><%= found_line.search_term_list %></td>
+        <td><%= found_line.search_term_count %></td>
+        <td><%= found_line.result_entry_count %></td>
+
+        <td><%= found_line.found_file.found_file_path %></td>
+        <td><%= found_line.found_line_num %></td>
+        <td><%= found_line.found_line_string %></td>
+        <td><%= link_to 'Show', found_line %></td>
+        <td><%= link_to 'Destroy', found_line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Found line', new_found_line_path %>

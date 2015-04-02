@@ -1,0 +1,37 @@
+<%# input params: found_lines %>
+
+
+<table style="border: 0.1em solid red">
+  <thead>
+  <tr>
+    <th>Found file id</th>
+    <th>id</th>
+
+    <th style="background-color: #DFDF70">search_term_list</th>
+    <th style="background-color: #DFDF70">search_term_count</th>
+    <th>result_entry_count</th>
+
+    <th>Found file path</th>
+    <th>Found line num</th>
+    <th>Found line string</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% found_lines.each do |found_line| %>
+    <tr>
+      <td><%= found_line.found_file_id %></td>
+      <td><%= found_line.id %></td>
+
+      <td style="background-color: #FFFFF0"><%= found_line.search_term_list %></td>
+      <td style="background-color: #FFFFF0"><%= found_line.search_term_count %></td>
+      <td><%= found_line.result_entry_count %></td>
+
+      <td><%= found_line.found_file.found_file_path %></td>
+      <td><%= found_line.found_line_num %></td>
+      <td><%= found_line.found_line_string %></td>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>

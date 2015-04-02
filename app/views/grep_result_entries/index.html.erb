@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Grep Result Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Grep raw id</th>
+      <th>Search term</th>
+      <th>id</th>
+      <th>Found file id</th>
+      <th>Found line id</th>
+      <th>Found file path</th>
+      <th>Found line num</th>
+      <th>Found line string</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grep_result_entries.each do |grep_result_entry| %>
+      <tr>
+        <td><%= grep_result_entry.grep_raw_id %></td>
+        <td><%= grep_result_entry.grep_raw.search_term %></td>
+        <td><%= grep_result_entry.id %></td>
+        <td><%= grep_result_entry.found_file_id %></td>
+        <td><%= grep_result_entry.found_line_id %></td>
+        <td><%= grep_result_entry.found_file.found_file_path %></td>
+        <td><%= grep_result_entry.found_line.found_line_num %></td>
+        <td><%= grep_result_entry.found_line.found_line_string %></td>
+        <td><%= link_to 'Show', grep_result_entry %></td>
+        <td><%= link_to 'Destroy', grep_result_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Grep result entry', new_grep_result_entry_path %>

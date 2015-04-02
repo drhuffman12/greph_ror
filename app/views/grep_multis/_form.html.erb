@@ -1,0 +1,25 @@
+<%= form_for(@grep_multi) do |f| %>
+  <% if @grep_multi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@grep_multi.errors.count, "error") %> prohibited this grep_multi from being saved:</h2>
+
+      <ul>
+      <% @grep_multi.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :search_terms %><br>
+    <%= f.text_area :search_terms %>
+  </div>
+  <div class="field">
+    <%= f.label :search_paths %><br>
+    <%= f.text_area :search_paths %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

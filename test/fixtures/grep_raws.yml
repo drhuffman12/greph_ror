@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  search_term: MyString
+  search_path: MyString
+  result_set: MyText
+  error_log: MyText
+
+two:
+  search_term: MyString
+  search_path: MyString
+  result_set: MyText
+  error_log: MyText

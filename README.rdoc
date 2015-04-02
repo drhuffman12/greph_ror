@@ -1,0 +1,14 @@
+== README
+
+This is a tool do search multiple key words (and common Ruby-ish variations) across multiple folders.
+
+Things to note:
+
+* version: 0.1.0
+
+* Ruby version 2.1.5, Rails 4.1.2, Sqlite 3
+
+* Typical usage would probably be:
+  * Create a 'GrepMultis' record (which in turn creates various records in the other tables).
+  * Go to the 'index' page for 'FoundFiles' and review the sorted results.
+  * Occasionally, click 'CleanDb' and then go back to 'GrepMultis'.

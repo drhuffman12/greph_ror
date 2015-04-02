@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Found Files</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Found file path</th>
+
+      <th style="background-color: #DFDF70">search_term_list</th>
+      <th style="background-color: #DFDF70">search_term_count</th>
+      <th style="background-color: #DFDF70">result_entry_count</th>
+      <th style="background-color: #DFDF70">file_line_count</th>
+
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @found_files.each do |found_file| %>
+      <tr>
+        <td><%= found_file.id %></td>
+        <td><%= found_file.found_file_path %></td>
+
+        <td style="background-color: #FFFFF0"><%= found_file.search_term_list %></td>
+        <td style="background-color: #FFFFF0"><%= found_file.search_term_count %></td>
+        <td style="background-color: #FFFFF0"><%= found_file.result_entry_count %></td>
+        <td style="background-color: #FFFFF0">
+          <%# = found_file.file_line_count %>
+          <%= link_to found_file.file_line_count, file_lines_details_path(id: found_file.id), remote: true, class: 'drh-button' %>
+        </td>
+
+        <td><%= link_to 'Show', found_file %></td>
+        <td><%= link_to 'Destroy', found_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <tr>
+        <td style="display: none" id="toggle_lines_<%= found_file.id %>">
+          <span id="hide_<%= found_file.id %>" class="drh-button" onclick="$('#hide_<%= found_file.id %>').css('display', 'none');$('#show_<%= found_file.id %>').css('display', 'inline');$('#show_lines_<%= found_file.id %>').css('display', 'none');">Hide</span>
+          <span id="show_<%= found_file.id %>" class="drh-button" style="display: none" onclick="$('#hide_<%= found_file.id %>').css('display', 'inline');$('#show_<%= found_file.id %>').css('display', 'none');$('#show_lines_<%= found_file.id %>').css('display', 'table-cell');">Show</span>
+        </td>
+        <td colspan="5" id="show_lines_<%= found_file.id %>">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Found file', new_found_file_path %>

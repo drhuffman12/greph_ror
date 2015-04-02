@@ -1,0 +1,216 @@
+
+# ================================================================
+# rvm:
+
+cd ~/_share_/_dev_/greph_ror
+
+source /home/drhuffman/.rvm/scripts/rvm
+
+rvm gemset use global
+
+# ================================================================
+# undo:
+
+# rails destroy controller Home
+# rails destroy controller CleanDb
+rails destroy scaffold GrepRaw
+rails destroy scaffold GrepResultLine
+rails destroy scaffold GrepResultEntry
+rails destroy scaffold FoundFile
+rails destroy scaffold FoundLine
+
+rails destroy scaffold GrepResultEntriesFoundFiles
+rails destroy scaffold GrepResultEntriesFoundLines
+
+rails destroy scaffold GrepOverlap
+
+
+# ================================================================
+# redo:
+
+# rails generate controller Home
+# rails generate controller CleanDb
+
+rails generate scaffold GrepRaw search_term:string search_path:string result_set:text error_log:text
+
+# rails generate scaffold GrepResultLine
+
+rails generate scaffold GrepResultEntry grep_raw_id:integer found_file_path:string found_line_num:integer found_line_string:string
+rails generate scaffold FoundFile found_file_path:string
+rails generate scaffold FoundLine found_file_id:integer found_line_num:integer
+rails generate scaffold GrepResultEntriesFoundFiles grep_result_entry_id:integer found_file_id:integer
+rails generate scaffold GrepResultEntriesFoundLines grep_result_entry_id:integer found_line_id:integer
+
+# rails generate scaffold GrepOverlap
+
+
+# ================================================================
+# controllers:
+
+Home index
+CleanDb index
+
+# ================================================================
+# scaffolds:
+
+GrepMulti search_terms:text search_paths:text
+
+foo
+grep_raw
+bar
+found_line
+grep_multi
+
+
+app
+test
+spec
+
+
+GrepRaw search_term:string search_path:string result_set:text error_log:text
+
+  def run
+    cmd = "grep -rn \"#{search_term}\" \"#{search_path}\""
+    stdout_str, status = Open3.capture2([env,] cmd... [, opts])
+
+  end
+
+rails destroy scaffold GrepResultLine
+# GrepResultLine grep_raw_id:integer found_file:string found_line_num:integer found_line_string:string
+
+GrepResultEntry grep_raw_id:integer found_file:string found_line_num:integer found_line_string:string
+
+# FoundFolder
+
+FoundFile found_file_path:string
+
+GrepResultEntriesFoundFiles grep_result_entry_id:integer found_file_id:integer
+
+FoundLine found_file_id:integer found_line_num:integer
+
+GrepResultEntriesFoundLines grep_result_entry_id:integer found_line_id:integer
+
+# FoundTerm
+
+GrepOverlap found_file:string found_lines:text found_terms:text term_count:integer line_count:integer line_num_min:integer line_num_max:integer line_num_aver:integer
+
+
+
+# Overlap found_unique_file_id:integer grep_raw_id:integer line_num_aver_delta:integer
+
+# migrations;
+
+AddCountsToFoundFile search_term_list:text search_term_count:integer result_entry_count:integer file_line_count:integer
+
+AddCountsToFoundLine search_term_list:text search_term_count:integer result_entry_count:integer
+
+
+
+# ================================================================
+# CONTROLLERS:
+
+# ----------------------------------------------------------------
+
+class CleanDbController < ApplicationController
+  def index
+    GrepResultLine.delete_all
+    GrepResultEntry.delete_all
+    GrepRaw.delete_all
+
+    count = GrepResultLine.count + GrepResultEntry.count + GrepRaw.count
+    @cleaned = count == 0 ? 'Cleaned' : 'Error'
+  end
+end
+
+# ================================================================
+# MODELS:
+
+# ----------------------------------------------------------------
+# filename: grep_raw.rb
+
+require 'open3'
+
+class GrepRaw < ActiveRecord::Base
+
+=begin
+      t.string :search_term
+      t.string :search_path
+      t.text :result_set
+      t.text :error_log
+=end
+
+  validates_presence_of :search_term, uniqueness: true
+  validates_presence_of :search_path, uniqueness: true
+
+  before_create do
+    validate_search_term
+    validate_search_path
+  end
+
+  before_save :run
+  after_save :split_result_set
+
+  def validate_search_term
+    true
+  end
+
+  def validate_search_path
+    File.exists?(self.search_path)
+  end
+
+  def run
+    self.search_path = File.expand_path(self.search_path)
+    cmd = "grep -rnI \"#{self.search_term}\" \"#{self.search_path}\""
+    # result_set, error_log = Open3.capture2([env,] cmd... [, opts])
+    self.result_set, self.error_log = ::Open3.capture2(cmd)
+  end
+
+  def split_result_set
+    # GrepResultLine.destroy_all(:grep_raw_id => self.id)
+    GrepResultEntry.destroy_all(:grep_raw_id => self.id)
+    self.result_set.each_line do |line|
+      line_parts = line.split(':')
+      found_file_path = line_parts.shift
+      found_line_num = line_parts.shift
+      found_line_string = line_parts.join(':')
+
+=begin
+      t.integer :grep_raw_id
+      t.string :found_file_path
+      t.integer :found_line_num
+      t.string :found_line_string
+=end
+      # GrepResultLine.create(:grep_raw_id => self.id, :found_file_path => found_file_path, :found_line_num => found_line_num, :found_line_string => found_line_string)
+      GrepResultEntry.create(:grep_raw_id => self.id, :found_file_path => found_file_path, :found_line_num => found_line_num, :found_line_string => found_line_string)
+
+    end
+  end
+
+end
+
+
+
+# ----------------------------------------------------------------
+# filename: grep_results_entry.rb
+
+class GrepResultEntry < ActiveRecord::Base
+  has_many :found_files, through: :grep_result_entries_found_files
+  has_many :found_lines, through: :grep_result_entries_found_lines
+
+  before_save do
+    ff = FoundFile.find_or_create_by(:found_file_path => self.found_file_path)
+    FoundLine.find_or_create_by(:found_file_id => ff.id, :found_line_num => self.found_line_num)
+  end
+
+end
+
+
+# ----------------------------------------------------------------
+
+
+
+# ----------------------------------------------------------------
+
+grep -rnI "foobar" "/home/drhuffman/_share_/_dev_/greph_ror"
+grep -rnI "grep_result_entries_found_files" "/home/drhuffman/_share_/_dev_/greph_ror"
+
